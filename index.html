@@ -1,0 +1,1790 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三灶鹤舞 - 国家级非物质文化遗产</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #141414;
+            --gold: #d4af37;
+            --gold-light: #f4e4bc;
+            --text: #e8e8e8;
+            --text-muted: #888;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* 封面带视频 */
+        .hero {
+            height: 100vh;
+            position: relative;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+        }
+
+        .hero-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .hero-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 5rem;
+            color: var(--gold);
+            text-shadow: 0 0 50px rgba(212, 175, 55, 0.8);
+            letter-spacing: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text);
+            margin-top: 1.5rem;
+            letter-spacing: 0.5rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .hero-desc {
+            max-width: 600px;
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 2rem;
+            line-height: 1.8;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .watch-btn {
+            margin-top: 2rem;
+            padding: 1rem 3rem;
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Noto Serif SC', serif;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.9s both;
+        }
+
+        .watch-btn:hover {
+            background: var(--gold);
+            color: var(--bg-dark);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--gold);
+            font-size: 0.9rem;
+            animation: bounce 2s infinite;
+            z-index: 20;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* 导航 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.5rem;
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        /* 章节 */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+            margin: 1rem auto;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+        }
+
+        /* 关于 */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .about-card {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid #2a2a2a;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .about-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .about-card h3 {
+            color: var(--gold-light);
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .about-card p {
+            color: var(--text-muted);
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+
+        /* 视频推荐区 */
+        .video-section {
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: 16px;
+            margin-top: 2rem;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .video-card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: all 0.3s;
+        }
+
+        .video-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-3px);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-info {
+            padding: 1.5rem;
+        }
+
+        .video-title {
+            font-size: 1.2rem;
+            color: var(--gold-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .video-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* 七个场景 */
+        .scenes-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .scene-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid #2a2a2a;
+            transition: all 0.4s;
+        }
+
+        .scene-card:hover {
+            border-color: var(--gold);
+            transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.2);
+        }
+
+        .scene-preview {
+            height: 160px;
+            background: linear-gradient(135deg, #1a1510 0%, #2a1f15 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .scene-icon {
+            font-size: 4rem;
+        }
+
+        .scene-number {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: rgba(212, 175, 55, 0.15);
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+
+        .scene-info {
+            padding: 1.5rem;
+        }
+
+        .scene-title {
+            font-size: 1.3rem;
+            color: var(--gold-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .scene-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* 场景详情弹窗 - 视频播放 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 16px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            color: var(--gold);
+            cursor: pointer;
+            z-index: 10;
+            background: rgba(0,0,0,0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-video {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .modal-video iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* 鹤姿势图片样式 */
+        .crane-pose {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .crane-pose .pose-label {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            color: var(--gold);
+            background: rgba(0,0,0,0.5);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+
+        /* 临门 - 欢跳姿势 */
+        .pose-linmen .crane-body {
+            width: 120px;
+            height: 160px;
+            position: relative;
+            animation: jump 0.8s ease-in-out infinite;
+        }
+        .pose-linmen .crane-body::before {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 50px;
+            background: #fff;
+            border-radius: 50% 50% 40% 40%;
+            top: 0;
+            left: 20px;
+            box-shadow: inset -10px -10px 20px rgba(0,0,0,0.1);
+        }
+        .pose-linmen .crane-body::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 100px solid #fff;
+            top: 50px;
+            left: 45px;
+            transform: rotate(-20deg);
+        }
+        .pose-linmen .wings {
+            position: absolute;
+            width: 100px;
+            height: 60px;
+            top: 20px;
+            left: 10px;
+            animation: flap 0.3s ease-in-out infinite alternate;
+        }
+        .pose-linmen .wings::before, .pose-linmen .wings::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 40px;
+            background: linear-gradient(180deg, #fff 0%, #e8e8e8 100%);
+            border-radius: 50% 50% 20% 20%;
+        }
+        .pose-linmen .wings::before { left: 0; transform: rotate(-30deg); }
+        .pose-linmen .wings::after { right: 0; transform: rotate(30deg); }
+        .pose-linmen .legs {
+            position: absolute;
+            bottom: 0;
+            left: 50px;
+            width: 20px;
+            height: 80px;
+            animation: leg-bounce 0.4s ease-in-out infinite alternate;
+        }
+        .pose-linmen .legs::before, .pose-linmen .legs::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 60px;
+            background: linear-gradient(180deg, #e07020 0%, #d06010 100%);
+            bottom: 0;
+        }
+        .pose-linmen .legs::before { left: 0; }
+        .pose-linmen .legs::after { right: 0; transform: translateX(10px); }
+
+        @keyframes jump {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+        @keyframes flap {
+            0% { transform: scaleY(1); }
+            100% { transform: scaleY(0.7); }
+        }
+        @keyframes leg-bounce {
+            0% { height: 80px; }
+            100% { height: 60px; }
+        }
+
+        /* 觅食 - 低头姿势 */
+        .pose-mishi .crane-body {
+            width: 140px;
+            height: 140px;
+            position: relative;
+        }
+        .pose-mishi .crane-body::before {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 45px;
+            background: #fff;
+            border-radius: 50%;
+            top: 10px;
+            left: 35px;
+        }
+        .pose-mishi .neck {
+            position: absolute;
+            width: 12px;
+            height: 80px;
+            background: #fff;
+            top: 45px;
+            left: 64px;
+            transform: rotate(60deg);
+            transform-origin: top;
+            animation: neck-down 2s ease-in-out infinite;
+        }
+        .pose-mishi .neck::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 20px;
+            background: #e07020;
+            border-radius: 50% 50% 30% 30%;
+            bottom: -15px;
+            left: -2px;
+        }
+        .pose-mishi .wings {
+            position: absolute;
+            width: 80px;
+            height: 50px;
+            top: 25px;
+            left: 30px;
+        }
+        .pose-mishi .wings::before, .pose-mishi .wings::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 45px;
+            background: linear-gradient(180deg, #fff 0%, #f0f0f0 100%);
+            border-radius: 50% 50% 30% 30%;
+        }
+        .pose-mishi .wings::before { left: 0; }
+        .pose-mishi .wings::after { right: 0; }
+
+        @keyframes neck-down {
+            0%, 100% { transform: rotate(60deg); }
+            50% { transform: rotate(80deg); }
+        }
+
+        /* 啄吃 - 啄食姿势 */
+        .pose-zhuochi .crane-body {
+            width: 120px;
+            height: 120px;
+            position: relative;
+        }
+        .pose-zhuochi .crane-body::before {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 40px;
+            background: #fff;
+            border-radius: 50%;
+            top: 10px;
+            left: 30px;
+        }
+        .pose-zhuochi .neck {
+            position: absolute;
+            width: 10px;
+            height: 70px;
+            background: #fff;
+            top: 40px;
+            left: 55px;
+            transform: rotate(45deg);
+            transform-origin: top;
+            animation: peck 0.5s ease-in-out infinite;
+        }
+        .pose-zhuochi .neck::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 25px;
+            background: linear-gradient(180deg, #e07020 0%, #cc5500 100%);
+            border-radius: 50% 50% 40% 40%;
+            bottom: -20px;
+            left: -2px;
+        }
+        .pose-zhuochi .legs {
+            position: absolute;
+            bottom: 10px;
+            left: 40px;
+            width: 40px;
+            height: 50px;
+        }
+        .pose-zhuochi .legs::before, .pose-zhuochi .legs::after {
+            content: '';
+            position: absolute;
+            width: 5px;
+            height: 50px;
+            background: linear-gradient(180deg, #e07020 0%, #c04000 100%);
+        }
+        .pose-zhuochi .legs::before { left: 10px; }
+        .pose-zhuochi .legs::after { right: 10px; }
+
+        @keyframes peck {
+            0%, 100% { transform: rotate(45deg); }
+            50% { transform: rotate(70deg); }
+        }
+
+        /* 洗嘴 - 甩头姿势 */
+        .pose-xizui .crane-body {
+            width: 130px;
+            height: 130px;
+            position: relative;
+        }
+        .pose-xizui .crane-body::before {
+            content: '';
+            position: absolute;
+            width: 65px;
+            height: 45px;
+            background: #fff;
+            border-radius: 50%;
+            top: 5px;
+            left: 32px;
+        }
+        .pose-xizui .neck {
+            position: absolute;
+            width: 10px;
+            height: 75px;
+            background: #fff;
+            top: 40px;
+            left: 60px;
+            border-radius: 5px;
+            animation: shake-head 1s ease-in-out infinite;
+        }
+        .pose-xizui .neck::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 18px;
+            background: #e07020;
+            border-radius: 50%;
+            bottom: -12px;
+            left: -2px;
+        }
+        .pose-xizui .wings {
+            position: absolute;
+            width: 70px;
+            height: 40px;
+            top: 20px;
+            left: 30px;
+        }
+        .pose-xizui .wings::before, .pose-xizui .wings::after {
+            content: '';
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            background: #f5f5f5;
+            border-radius: 50%;
+        }
+        .pose-xizui .wings::before { left: 0; }
+        .pose-xizui .wings::after { right: 0; }
+
+        @keyframes shake-head {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-20deg); }
+            75% { transform: rotate(20deg); }
+        }
+
+        /* 梳毛 - 侧颈姿势 */
+        .pose-ximaomao .crane-body {
+            width: 130px;
+            height: 120px;
+            position: relative;
+        }
+        .pose-ximaomao .crane-body::before {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 45px;
+            background: #fff;
+            border-radius: 50%;
+            top: 5px;
+            left: 30px;
+        }
+        .pose-ximaomao .neck {
+            position: absolute;
+            width: 10px;
+            height: 85px;
+            background: #fff;
+            top: 40px;
+            left: 55px;
+            transform: rotate(-30deg);
+            transform-origin: top;
+            border-radius: 5px;
+        }
+        .pose-ximaomao .neck::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 16px;
+            background: #e07020;
+            border-radius: 50%;
+            bottom: -10px;
+            left: -2px;
+        }
+        .pose-ximaomao .head-back {
+            position: absolute;
+            width: 30px;
+            height: 25px;
+            background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
+            border-radius: 50%;
+            top: 15px;
+            left: 30px;
+            transform: rotate(-20deg);
+        }
+        .pose-ximaomao .wings {
+            position: absolute;
+            width: 75px;
+            height: 45px;
+            top: 25px;
+            left: 28px;
+        }
+        .pose-ximaomao .wings::before, .pose-ximaomao .wings::after {
+            content: '';
+            position: absolute;
+            width: 38px;
+            height: 40px;
+            background: linear-gradient(180deg, #fff 0%, #f8f8f8 100%);
+            border-radius: 50% 50% 30% 30%;
+        }
+        .pose-ximaomao .wings::before { left: 0; }
+        .pose-ximaomao .wings::after { right: 0; transform: scaleX(-1); }
+
+        /* 嬉戏 - 振翅姿势 */
+        .pose-xishi .crane-body {
+            width: 150px;
+            height: 140px;
+            position: relative;
+        }
+        .pose-xishi .crane-body::before {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 50px;
+            background: #fff;
+            border-radius: 50% 50% 40% 40%;
+            top: 5px;
+            left: 40px;
+        }
+        .pose-xishi .neck {
+            position: absolute;
+            width: 10px;
+            height: 50px;
+            background: #fff;
+            top: 45px;
+            left: 70px;
+            border-radius: 5px;
+        }
+        .pose-xishi .neck::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 16px;
+            background: #e07020;
+            border-radius: 50%;
+            bottom: -10px;
+            left: -2px;
+        }
+        .pose-xishi .wings-wild {
+            position: absolute;
+            width: 140px;
+            height: 80px;
+            top: 15px;
+            left: 5px;
+            animation: wild-flap 0.2s ease-in-out infinite alternate;
+        }
+        .pose-xishi .wings-wild::before, .pose-xishi .wings-wild::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 60px;
+            background: linear-gradient(180deg, #fff 0%, #f5f5f5 60%, #e8e8e8 100%);
+            border-radius: 50% 50% 20% 20%;
+        }
+        .pose-xishi .wings-wild::before { 
+            left: 0; 
+            transform: rotate(-45deg);
+            animation: wing-left 0.2s ease-in-out infinite alternate;
+        }
+        .pose-xishi .wings-wild::after { 
+            right: 0; 
+            transform: rotate(45deg) scaleX(-1);
+            animation: wing-right 0.2s ease-in-out infinite alternate;
+        }
+        .pose-xishi .legs {
+            position: absolute;
+            bottom: 20px;
+            left: 55px;
+            width: 40px;
+            height: 40px;
+        }
+        .pose-xishi .legs::before, .pose-xishi .legs::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 40px;
+            background: linear-gradient(180deg, #e07020 0%, #d05010 100%);
+        }
+        .pose-xishi .legs::before { left: 5px; transform: rotate(-10deg); }
+        .pose-xishi .legs::after { right: 5px; transform: rotate(10deg); }
+
+        @keyframes wild-flap {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        @keyframes wing-left {
+            0% { transform: rotate(-45deg) scaleY(1); }
+            100% { transform: rotate(-30deg) scaleY(0.8); }
+        }
+        @keyframes wing-right {
+            0% { transform: rotate(45deg) scaleX(-1) scaleY(1); }
+            100% { transform: rotate(30deg) scaleX(-1) scaleY(0.8); }
+        }
+
+        /* 归巢 - 飞翔姿势 */
+        .pose-guichao .crane-body {
+            width: 160px;
+            height: 120px;
+            position: relative;
+            animation: fly-forward 2s ease-in-out infinite;
+        }
+        .pose-guichao .crane-body::before {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 35px;
+            background: #fff;
+            border-radius: 50%;
+            top: 20px;
+            left: 55px;
+        }
+        .pose-guichao .neck {
+            position: absolute;
+            width: 8px;
+            height: 40px;
+            background: #fff;
+            top: 45px;
+            left: 75px;
+            transform: rotate(-15deg);
+            border-radius: 4px;
+        }
+        .pose-guichao .neck::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 14px;
+            background: #e07020;
+            border-radius: 50%;
+            bottom: -8px;
+            left: -2px;
+        }
+        .pose-guichao .wings-fly {
+            position: absolute;
+            width: 180px;
+            height: 70px;
+            top: 15px;
+            left: -10px;
+            animation: fly-wing 0.8s ease-in-out infinite;
+        }
+        .pose-guichao .wings-fly::before, .pose-guichao .wings-fly::after {
+            content: '';
+            position: absolute;
+            width: 90px;
+            height: 65px;
+            background: linear-gradient(180deg, #fff 0%, #f8f8f8 50%, #e8e8e8 100%);
+            border-radius: 50% 50% 20% 20%;
+        }
+        .pose-guichao .wings-fly::before { 
+            left: 0; 
+            transform: rotate(-35deg);
+        }
+        .pose-guichao .wings-fly::after { 
+            right: 0; 
+            transform: rotate(35deg) scaleX(-1);
+        }
+        .pose-guichao .tail {
+            position: absolute;
+            width: 40px;
+            height: 25px;
+            background: linear-gradient(180deg, #e8e8e8 0%, #d8d8d8 100%);
+            border-radius: 30% 30% 50% 50%;
+            top: 40px;
+            left: 20px;
+            transform: rotate(-10deg);
+        }
+        .pose-guichao .legs-retract {
+            position: absolute;
+            bottom: 35px;
+            left: 65px;
+            width: 30px;
+            height: 20px;
+            animation: leg-retract 0.8s ease-in-out infinite;
+        }
+        .pose-guichao .legs-retract::before, .pose-guichao .legs-retract::after {
+            content: '';
+            position: absolute;
+            width: 5px;
+            height: 20px;
+            background: linear-gradient(180deg, #e07020 0%, #c04000 100%);
+            border-radius: 3px;
+        }
+        .pose-guichao .legs-retract::before { left: 5px; }
+        .pose-guichao .legs-retract::after { right: 5px; }
+
+        @keyframes fly-forward {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(10px); }
+        }
+        @keyframes fly-wing {
+            0% { transform: scaleY(1); }
+            50% { transform: scaleY(0.7); }
+            100% { transform: scaleY(1); }
+        }
+        @keyframes leg-retract {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* 背景装饰 */
+        .crane-pose::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .modal-info {
+            padding: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .modal-desc {
+            color: var(--text);
+            line-height: 2;
+            font-size: 1.05rem;
+        }
+
+        /* 鹤舞体验 - 视频选择 */
+        .experience-section {
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: 16px;
+            margin-top: 2rem;
+        }
+
+        .video-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .video-btn {
+            padding: 1.5rem;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .video-btn:hover {
+            border-color: var(--gold);
+            background: #252525;
+        }
+
+        .video-btn.active {
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .video-btn-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .video-btn-text {
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .video-player {
+            margin-top: 2rem;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .video-player.active {
+            display: block;
+        }
+
+        .video-player iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-player-placeholder {
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        /* 舞台视频 */
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .video-card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: all 0.3s;
+        }
+
+        .video-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .video-wrapper {
+            aspect-ratio: 16/9;
+            background: #000;
+        }
+
+        .video-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-card .video-info {
+            padding: 1.2rem;
+        }
+
+        .video-card .video-info h3 {
+            color: var(--gold-light);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-card .video-info p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* 传承人 */
+        .inheritors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .inherit-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid #2a2a2a;
+            transition: all 0.3s;
+        }
+
+        .inherit-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .inherit-avatar {
+            height: 220px;
+            background: linear-gradient(135deg, #1a1510 0%, #2a2015 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .inherit-avatar-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #2a2520;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--gold);
+            border: 4px solid var(--gold);
+        }
+
+        .inherit-info {
+            padding: 1.5rem;
+        }
+
+        .inherit-name {
+            font-size: 1.4rem;
+            color: var(--gold-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .inherit-title {
+            font-size: 0.95rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .inherit-brief {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* 传承人详情弹窗 */
+        .inherit-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .inherit-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .inherit-modal-content {
+            background: var(--bg-card);
+            border-radius: 16px;
+            max-width: 750px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .inherit-modal-header {
+            height: 160px;
+            background: linear-gradient(135deg, #1a1510 0%, #2a2015 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .inherit-modal-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: #2a2520;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--gold);
+            border: 4px solid var(--gold);
+        }
+
+        .inherit-modal-body {
+            padding: 2.5rem;
+        }
+
+        .inherit-modal-name {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .inherit-modal-title {
+            text-align: center;
+            color: var(--gold-light);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .inherit-modal-desc {
+            color: var(--text);
+            line-height: 2;
+            font-size: 1.05rem;
+        }
+
+        .inherit-modal-desc h4 {
+            color: var(--gold);
+            margin: 1.8rem 0 1rem;
+            font-size: 1.2rem;
+        }
+
+        .inherit-modal-desc p {
+            color: var(--text-muted);
+        }
+
+        /* 价值 */
+        .value-section {
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: 16px;
+            margin-top: 2rem;
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .value-item {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .value-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .value-title {
+            font-size: 1.4rem;
+            color: var(--gold-light);
+            margin-bottom: 1rem;
+        }
+
+        .value-desc {
+            color: var(--text-muted);
+            line-height: 1.9;
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: #0d0d0d;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+                letter-spacing: 0.5rem;
+            }
+            
+            .section {
+                padding: 3rem 1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .video-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 封面 - 带视频 -->
+    <section class="hero">
+        <!-- 央视纪录片嵌入 -->
+        <iframe class="hero-iframe" src="https://v.qq.com/iframe/player.html?vid=v3212ll7spl&auto=0" allowfullscreen></iframe>
+        
+        <div class="hero-overlay">
+            <h1 class="hero-title">三灶鹤舞</h1>
+            <p class="hero-subtitle">国家级非物质文化遗产</p>
+            <p class="hero-desc">流传于珠海市金湾区三灶镇的民间传统舞蹈<br>700年历史 · 迎春接福 · 贺老拜寿</p>
+            <button class="watch-btn" onclick="scrollToSection('about')">探索鹤舞文化</button>
+        </div>
+        <div class="scroll-hint">↓ 向下探索</div>
+    </section>
+
+    <!-- 导航 -->
+    <nav class="nav">
+        <div class="nav-logo">鹤舞</div>
+        <div class="nav-links">
+            <a href="#about">关于</a>
+            <a href="#scenes">七场景</a>
+            <a href="#videos">推荐视频</a>
+            <a href="#stage-videos">舞台视频</a>
+            <a href="#inheritors">传承人</a>
+            <a href="#value">文化价值</a>
+        </div>
+    </nav>
+
+    <!-- 关于 -->
+    <section class="section" id="about">
+        <h2 class="section-title">关于三灶鹤舞</h2>
+        <p class="section-subtitle">流传于珠海市金湾区三灶镇的民间传统舞蹈</p>
+        
+        <div class="about-grid">
+            <div class="about-card">
+                <h3>历史渊源</h3>
+                <p>起源于宋代末期，流传至今已有700多年历史。是三灶人民迎春接福、贺老拜寿的传统民俗。</p>
+            </div>
+            <div class="about-card">
+                <h3>表演形式</h3>
+                <p>由5人组成：一人唱鹤歌，一人跳鹤舞，三人使用打击乐器——鼓、锣、钹。舞者披上鹤衣，模拟白鹤生活习性。</p>
+            </div>
+            <div class="about-card">
+                <h3>非遗荣誉</h3>
+                <p>2011年5月被列入第三批国家级非物质文化遗产名录。是珠海市唯一的国家级非遗项目。</p>
+            </div>
+            <div class="about-card">
+                <h3>文化内涵</h3>
+                <p>白鹤象征长寿、吉祥。鹤舞是三灶村民给60岁以上老人拜寿、为村民祈福的礼仪习俗。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 推荐视频 -->
+    <section class="section" id="videos">
+        <h2 class="section-title">推荐视频</h2>
+        <p class="section-subtitle">了解三灶鹤舞的窗口</p>
+        
+        <div class="video-section">
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe src="https://v.qq.com/iframe/player.html?vid=v3212ll7spl&auto=0" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">非遗·三灶鹤舞</h3>
+                        <p class="video-desc">完整展示三灶鹤舞的表演全过程，700年传承的民间艺术</p>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe src="https://v.qq.com/iframe/player.html?vid=a003304yey5&auto=0" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">《广东印记》三灶鹤舞</h3>
+                        <p class="video-desc">广东省人民政府地方志办公室出品，4分钟完整介绍三灶鹤舞的传承与发展</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 七个场景 -->
+    <section class="section" id="scenes">
+        <h2 class="section-title">七个场景</h2>
+        <p class="section-subtitle">点击观看各场景动作演示</p>
+        
+        <div class="scenes-container">
+            <div class="scene-card" onclick="openScene(1)">
+                <div class="scene-preview">
+                    <span class="scene-number">壹</span>
+                    <div class="scene-icon">🚪</div>
+                </div>
+                <div class="scene-info">
+                    <h3 class="scene-title">临门</h3>
+                    <p class="scene-desc">表现白鹤喜临新地，展现欢跳、扬翅、点头的喜悦神态</p>
+                </div>
+            </div>
+
+            <div class="scene-card" onclick="openScene(2)">
+                <div class="scene-preview">
+                    <span class="scene-number">贰</span>
+                    <div class="scene-icon">🔍</div>
+                </div>
+                <div class="scene-info">
+                    <h3 class="scene-title">觅食</h3>
+                    <p class="scene-desc">表现白鹤在水中觅食的姿态，低头探寻、悠然自得</p>
+                </div>
+            </div>
+
+            <div class="scene-card" onclick="openScene(3)">
+                <div class="scene-preview">
+                    <span class="scene-number">叁</span>
+                    <div class="scene-icon">💤</div>
+                </div>
+                <div class="scene-info">
+                    <h3 class="scene-title">休憩</h3>
+                    <p class="scene-desc">表现白鹤放松休息的宁静姿态</p>
+                </div>
+            </div>
+
+            <div class="scene-card" onclick="openScene(4)">
+                <div class="scene-preview">
+                    <span class="scene-number">肆</span>
+                    <div class="scene-icon">💧</div>
+                </div>
+                <div class="scene-info">
+                    <h3 class="scene-title">洗嘴</h3>
+                    <p class="scene-desc">表现白鹤在水中清洗喙部的优雅姿态</p>
+                </div>
+            </div>
+
+            <div class="scene-card" onclick="openScene(5)">
+                <div class="scene-preview">
+                    <span class="scene-number">伍</span>
+                    <div class="scene-icon">🪶</div>
+                </div>
+                <div class="scene-info">
+                    <h3 class="scene-title">梳毛</h3>
+                    <p class="scene-desc">表现白鹤用喙梳理羽毛的精心姿态</p>
+                </div>
+            </div>
+
+            <div class="scene-card" onclick="openScene(6)">
+                <div class="scene-preview">
+                    <span class="scene-number">陆</span>
+                    <div class="scene-icon">🎉</div>
+                </div>
+                <div class="scene-info">
+                    <h3 class="scene-title">嬉戏</h3>
+                    <p class="scene-desc">白鹤相互嬉戏、追逐玩耍的欢乐场景</p>
+                </div>
+            </div>
+
+            <div class="scene-card" onclick="openScene(7)">
+                <div class="scene-preview">
+                    <span class="scene-number">柒</span>
+                    <div class="scene-icon">✈️</div>
+                </div>
+                <div class="scene-info">
+                    <h3 class="scene-title">归巢</h3>
+                    <p class="scene-desc">白鹤展翅高飞、归巢的优美姿态，寓意圆满结束</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 场景详情弹窗 -->
+    <div class="modal" id="sceneModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeScene()">×</button>
+            <div class="modal-video" id="sceneVideo">
+                <!-- 视频嵌入 -->
+            </div>
+            <div class="modal-info">
+                <h3 class="modal-title" id="sceneTitle"></h3>
+                <p class="modal-desc" id="sceneDesc"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 舞台视频 -->
+    <section class="section" id="stage-videos">
+        <h2 class="section-title">舞台视频</h2>
+        <p class="section-subtitle">观赏三灶鹤舞精彩舞台表演</p>
+        
+        <div class="videos-grid">
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <iframe src="https://v.qq.com/iframe/player.html?vid=a0527hh8cbd&auto=0" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h3>三灶鹤舞展演</h3>
+                    <p>三灶鹤舞现场展演实况</p>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <iframe src="//player.bilibili.com/player.html?bvid=BV1CYQdBfEaj&page=1&high_quality=1&danmaku=0" allowfullscreen scrolling="no" frameborder="0"></iframe>
+                </div>
+                <div class="video-info">
+                    <h3>三灶鹤舞舞台版</h3>
+                    <p>三灶鹤舞舞台表演完整版</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 传承人 -->
+    <section class="section" id="inheritors">
+        <h2 class="section-title">传承人</h2>
+        <p class="section-subtitle">点击查看传承人详细故事</p>
+        
+        <div class="inheritors-grid">
+            <div class="inherit-card" onclick="openInherit(0)">
+                <div class="inherit-avatar">
+                    <div class="inherit-avatar-img">谈</div>
+                </div>
+                <div class="inherit-info">
+                    <h3 class="inherit-name">谈森荣</h3>
+                    <p class="inherit-title">国家级非遗传承人（2025年）</p>
+                    <p class="inherit-brief">1966年生，珠海市金湾区三灶镇海澄村人。2025年入选第六批国家级非遗传承人。</p>
+                </div>
+            </div>
+
+            <div class="inherit-card" onclick="openInherit(1)">
+                <div class="inherit-avatar">
+                    <div class="inherit-avatar-img">陈</div>
+                </div>
+                <div class="inherit-info">
+                    <h3 class="inherit-name">陈福炎</h3>
+                    <p class="inherit-title">第四批国家级非遗传承人 · "鹤王"</p>
+                    <p class="inherit-brief">1933年生，被誉为三灶"鹤王"，16岁学艺，技艺精湛，饰演多部鹤舞纪录片。</p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- 传承人详情弹窗 -->
+    <div class="inherit-modal" id="inheritModal">
+        <div class="inherit-modal-content">
+            <button class="modal-close" onclick="closeInherit()">×</button>
+            <div class="inherit-modal-header">
+                <div class="inherit-modal-avatar" id="modalAvatar"></div>
+            </div>
+            <div class="inherit-modal-body">
+                <h3 class="inherit-modal-name" id="modalName"></h3>
+                <p class="inherit-modal-title" id="modalTitle"></p>
+                <div class="inherit-modal-desc" id="modalDesc"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 文化价值 -->
+    <section class="section" id="value">
+        <h2 class="section-title">文化价值</h2>
+        <p class="section-subtitle">白鹤形象承载的文化内涵</p>
+        
+        <div class="value-section">
+            <div class="value-grid">
+                <div class="value-item">
+                    <div class="value-icon">🦢</div>
+                    <h3 class="value-title">长寿吉祥</h3>
+                    <p class="value-desc">白鹤在中国传统文化中是长寿、吉祥的象征。鹤舞寄托了人们对健康长寿、幸福美满的期盼。</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">👴</div>
+                    <h3 class="value-title">敬老祈福</h3>
+                    <p class="value-desc">三灶鹤舞是村民给60岁以上老人拜寿、为村民祈福的传统礼仪，体现了尊老敬老的传统美德。</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🏮</div>
+                    <h3 class="value-title">文化认同</h3>
+                    <p class="value-desc">700多年的传承，鹤舞已成为三灶镇独特的精神文化符号，是连接过去与现在的文化纽带。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>三灶鹤舞 · 国家级非物质文化遗产</p>
+        <p style="margin-top:0.5rem;opacity:0.6;">让传统文化焕发新生</p>
+    </footer>
+
+    <script>
+        // 场景数据 - 使用7张真实照片
+        const scenesData = [
+            {
+                title: '临门',
+                desc: '表现白鹤喜临新地，展现欢跳、扬翅、点头的喜悦神态。舞者披上鹤衣，以"前点步跳跃"、"双脚跳跃"等动作，表现白鹤初到时的兴奋与活力。',
+                image: '临门.jpeg'
+            },
+            {
+                title: '觅食',
+                desc: '表现白鹤在水中觅食的姿态。动作柔和优美，颈部自然摆动，脚步轻盈。',
+                image: '觅食.jpeg'
+            },
+            {
+                title: '休憩',
+                desc: '表现白鹤放松休息的宁静姿态。',
+                image: '休憩.jpeg'
+            },
+            {
+                title: '洗嘴',
+                desc: '表现白鹤在水中清洗喙部的优雅姿态。动作舒缓、细腻，体现出白鹤爱干净的生活习性。',
+                image: '洗嘴.jpeg'
+            },
+            {
+                title: '梳毛',
+                desc: '表现白鹤用喙梳理羽毛的精心姿态。舞蹈动作细腻优雅，展示白鹤的美丽与高洁。',
+                image: '梳羽.jpeg'
+            },
+            {
+                title: '嬉戏',
+                desc: '白鹤相互嬉戏、追逐玩耍的欢乐场景。动作活泼跳跃，双翅展开，身体旋转。',
+                image: '嬉戏.jpeg'
+            },
+            {
+                title: '归巢',
+                desc: '白鹤展翅高飞、归巢的优美姿态，寓意圆满结束。舞蹈达到高潮，展现白鹤翱翔天际的雄姿。',
+                image: '归巢.jpeg'
+            }
+        ];
+
+        // 传承人数据
+        const inheritData = [
+            {
+                name: '谈森荣',
+                title: '国家级非物质文化遗产代表性传承人（2025年）',
+                avatar: '谈',
+                desc: `<h4>个人简介</h4>
+                <p>谈森荣，男，1966年生，广东省珠海市金湾区三灶镇海澄村人。自幼生长于三灶镇海澄村正表村，受传统风俗的熏陶，喜爱三灶鹤舞。</p>
+                
+                <h4>学艺经历</h4>
+                <p>2010年正式拜国家级传承人陈福炎为师，系统学习三灶鹤舞，全面掌握鹤舞套路、表演等技艺。他跟随鹤舞传承人陈福炎、杨日欢等学习三灶鹤舞技艺。</p>
+                
+                <h4>传承贡献</h4>
+                <p>近年来，积极参加各种宣传展示、交流传播及传承培训活动，并在海澄小学、金湾一小、海华小学开展三灶鹤舞传承工作。2013年被评为金湾区区级非物质文化遗产传承人，后晋升为省级传承人。</p>
+                
+                <h4>获得荣誉</h4>
+                <p>2025年3月17日，被中华人民共和国文化和旅游部认定为第六批国家级非物质文化遗产代表性传承人，成为珠海市本次唯一获此殊荣者。</p>`
+            },
+            {
+                name: '陈福炎',
+                title: '第四批国家级非遗传承人 · "鹤王"',
+                avatar: '陈',
+                desc: `<h4>个人简介</h4>
+                <p>陈福炎，男，1933年10月出生，广东省珠海市人。年幼时因见长辈表演舞鹤产生学习兴趣，16岁正式拜师学习舞鹤技艺。</p>
+                
+                <h4>艺术成就</h4>
+                <p>他表演的鹤舞轻盈灵动，表演时把自己和鹤融为一体，被誉为三灶"鹤王"。他注重平时练习，功底扎实，鹤舞套路原生态化程度高。</p>
+                
+                <h4>获得荣誉</h4>
+                <p>2006年，陈福炎的鹤舞荣获珠海市金奖；2008年成为广东省非物质文化遗产——三灶鹤舞的传承人；2012年获第四批国家级非物质文化遗产项目代表性传承人称号。</p>
+                
+                <h4>传承贡献</h4>
+                <p>秉承着"不能断了传承"的信念，陈福炎老人培养了谈森荣等多位传承人，为三灶鹤舞的延续做出巨大贡献。现年事已高，但仍心系鹤舞传承。</p>`
+            }
+        ];
+
+        // 鹤舞体验视频（腾讯视频）
+        const experienceVideos = {
+            'linmen': 'https://v.qq.com/iframe/player.html?vid=v3212ll7spl&auto=0',
+            'mishi': 'https://v.qq.com/iframe/player.html?vid=v3212ll7spl&auto=0',
+            'zhuochi': 'https://v.qq.com/iframe/player.html?vid=v3212ll7spl&auto=0',
+            'xizui': 'https://v.qq.com/iframe/player.html?vid=v3212ll7spl&auto=0',
+            'ximaomao': 'https://v.qq.com/iframe/player.html?vid=v3212ll7spl&auto=0',
+            'guichao': 'https://v.qq.com/iframe/player.html?vid=v3212ll7spl&auto=0'
+        };
+
+        // 滚动到指定章节
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 打开场景 - 显示真实照片
+        function openScene(index) {
+            const modal = document.getElementById('sceneModal');
+            const title = document.getElementById('sceneTitle');
+            const desc = document.getElementById('sceneDesc');
+            const video = document.getElementById('sceneVideo');
+            
+            const data = scenesData[index - 1];
+            title.textContent = data.title;
+            desc.textContent = data.desc;
+            
+            // 显示真实照片
+            video.innerHTML = `<img src="${data.image}" alt="${data.title}" style="width:100%;height:100%;object-fit:contain;background:#000;">`;
+            
+            modal.classList.add('active');
+        }
+
+        // 关闭场景
+        function closeScene() {
+            const modal = document.getElementById('sceneModal');
+            modal.classList.remove('active');
+            // 清空内容
+            document.getElementById('sceneVideo').innerHTML = '';
+        }
+
+        // 播放鹤舞体验视频
+        function playVideo(key, btn) {
+            const player = document.getElementById('videoPlayer');
+            const placeholder = document.getElementById('videoPlaceholder');
+            
+            // 更新按钮状态
+            document.querySelectorAll('.video-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // 显示视频
+            player.classList.add('active');
+            player.innerHTML = `<iframe src="${experienceVideos[key]}" allowfullscreen></iframe>`;
+        }
+
+        // 打开传承人详情
+        function openInherit(index) {
+            const modal = document.getElementById('inheritModal');
+            const data = inheritData[index];
+            
+            document.getElementById('modalAvatar').textContent = data.avatar;
+            document.getElementById('modalName').textContent = data.name;
+            document.getElementById('modalTitle').textContent = data.title;
+            document.getElementById('modalDesc').innerHTML = data.desc;
+            
+            modal.classList.add('active');
+        }
+
+        // 关闭传承人详情
+        function closeInherit() {
+            document.getElementById('inheritModal').classList.remove('active');
+        }
+
+        // 点击外部关闭弹窗
+        document.getElementById('sceneModal').addEventListener('click', function(e) {
+            if (e.target === this) closeScene();
+        });
+
+        document.getElementById('inheritModal').addEventListener('click', function(e) {
+            if (e.target === this) closeInherit();
+        });
+    </script>
+</body>
+</html>
